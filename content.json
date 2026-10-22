@@ -1,21 +1,56 @@
 {
-  "hero": {"title": "Tu celu,", "accent": "como nuevo.", "lead": "Reparación de celulares: cambio de módulo, pantallas y más. Mirá cómo trabajo en los videos y escribime por WhatsApp."},
+  "hero": {
+    "title": "Tu celu,",
+    "accent": "como nuevo.",
+    "lead": "Reparación de celulares: cambio de módulo, pantallas y más. Mirá cómo trabajo en los videos y escribime por WhatsApp."
+  },
   "wa": "5491124007231",
   "phone": "11 2400-7231",
   "ig": "alex_culen",
   "threads": "alexxculen",
   "servicesIntro": "Trabajo con las marcas más comunes. Consultame por tu modelo y te digo qué se puede hacer.",
   "services": [
-    {"t": "Cambio de módulo", "d": "Pantalla y táctil nuevos para Samsung, Motorola y otras marcas."},
-    {"t": "Equipos que no encienden", "d": "Diagnóstico para saber si es batería, placa o software."},
-    {"t": "Software y desbloqueo", "d": "Fallas de sistema, reinicios constantes y equipos trabados."},
-    {"t": "iPhone y Android", "d": "Atiendo equipos de ambos sistemas."}
+    {
+      "t": "Cambio de módulo",
+      "d": "Pantalla y táctil nuevos para Samsung, Motorola y otras marcas."
+    },
+    {
+      "t": "Equipos que no encienden",
+      "d": "Diagnóstico para saber si es batería, placa o software."
+    },
+    {
+      "t": "Software y desbloqueo",
+      "d": "Fallas de sistema, reinicios constantes y equipos trabados."
+    },
+    {
+      "t": "iPhone y Android",
+      "d": "Atiendo equipos de ambos sistemas."
+    },
+    {
+      "t": "Celulares, Tablets y Computadoras",
+      "d": "Diagnostico, revisión y limpieza de todos los dispositivos electrónicos"
+    }
   ],
   "worksIntro": "Reparaciones reales, paso a paso. Tocá un video para verlo en Instagram.",
   "reels": [
-    {"title": "Samsung A02", "sub": "Cambio de módulo", "url": "https://www.instagram.com/reel/DIrxGP5s-pe/", "src": ""},
-    {"title": "Samsung A03", "sub": "Reparación", "url": "https://www.instagram.com/reel/DCzbpQQv7vD/", "src": ""},
-    {"title": "Samsung A10", "sub": "Reparación en banco", "url": "https://www.instagram.com/reel/DAGpl32JQzc/", "src": ""}
+    {
+      "title": "Samsung A02",
+      "sub": "Cambio de módulo",
+      "url": "https://www.instagram.com/reel/DIrxGP5s-pe/",
+      "src": ""
+    },
+    {
+      "title": "Samsung A03",
+      "sub": "Reparación",
+      "url": "https://www.instagram.com/reel/DCzbpQQv7vD/",
+      "src": ""
+    },
+    {
+      "title": "Samsung A10",
+      "sub": "Reparación en banco",
+      "url": "https://www.instagram.com/reel/DAGpl32JQzc/",
+      "src": ""
+    }
   ],
   "sections": [],
   "contactText": "Contame qué modelo tenés y qué le pasa. Respondo por WhatsApp o mensaje directo."
