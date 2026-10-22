@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex"><title>Admin | Alex Culen</title><meta name="color-scheme" content="dark">
+<style>
+:root{--bg:#07060f;--panel:#120f24;--line:#2a2250;--ink:#f1edff;--mute:#a79fd0;--violet:#a855f7;--blue:#38bdf8;color-scheme:dark}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,'Segoe UI',sans-serif}
+.w{max-width:820px;margin:0 auto;padding:20px 16px 120px}
+h1{font-size:1.5rem;margin:8px 0}h2{font-size:1.15rem;margin:0 0 12px;color:var(--blue)}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin:0 0 16px}
+label{display:block;font-size:.85rem;color:var(--mute);margin:10px 0 4px}
+input,textarea{width:100%;background:#0b0918;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:10px;font:inherit}
+textarea{min-height:80px;resize:vertical}
+button{background:#241c4a;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:9px 14px;font:inherit;cursor:pointer}
+button.p{background:linear-gradient(90deg,var(--violet),#6366f1);border:0;font-weight:600}
+button.d{color:#fda4af}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--blue)}
+.item{border:1px solid var(--line);border-radius:12px;padding:12px;margin:0 0 12px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
+.th{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}.th div{width:110px}
+.th img,.th video{width:110px;height:80px;object-fit:cover;border-radius:8px;background:#000}
+.bar{position:fixed;left:0;right:0;bottom:0;background:rgba(7,6,15,.95);border-top:1px solid var(--line);padding:12px 16px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+#st{color:var(--mute);font-size:.9rem}small{color:var(--mute)}
+</style></head><body><div class="w">
+<h1>Panel de administración</h1>
+<small>Los cambios se guardan en tu repositorio de GitHub y la página se actualiza sola en uno o dos minutos.</small>
+<div class="box" id="cfg" style="margin-top:14px"></div>
+<div id="ed"></div></div>
+<div class="bar"><span id="st">Conectá tu repositorio para empezar.</span><button class="p" id="save" disabled>Guardar y publicar</button></div>
+<script>
+const $=s=>document.querySelector(s),st=t=>$('#st').textContent=t;
+const prev={};let cfg=JSON.parse(localStorage.getItem('cc_cfg')||'{}'),data=null,pending={};
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const get=(o,p)=>p.split('.').reduce((a,k)=>a?.[k],o);
+const set=(o,p,v)=>{const k=p.split('.'),l=k.pop();k.reduce((a,x)=>a[x],o)[l]=v};
+const api=(p,o={})=>fetch(`https://api.github.com/repos/${cfg.repo}/contents/${p}`,{...o,headers:{Authorization:'Bearer '+cfg.token,Accept:'application/vnd.github+json','Content-Type':'application/json'}});
+const u8=s=>btoa(unescape(encodeURIComponent(s)));
+const b64=f=>new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(r.result.split(',')[1]);r.onerror=no;r.readAsDataURL(f)});
+async function put(path,content){
+  const r=await api(path),sha=r.ok?(await r.json()).sha:undefined;
+  const w=await api(path,{method:'PUT',body:JSON.stringify({message:'Actualizar '+path,content,sha})});
+  if(!w.ok)throw new Error((await w.json()).message||w.status);
+}
+function drawCfg(){
+  $('#cfg').innerHTML=`<h2>Conexión con GitHub</h2>
+  <label>Repositorio (usuario/nombre)</label><input id="repo" placeholder="tuusuario/culencell" value="${esc(cfg.repo)}">
+  <label>Token de acceso</label><input id="tok" type="password" value="${esc(cfg.token)}">
+  <small>Creá un token en GitHub: Settings, Developer settings, Fine-grained tokens. Elegí solo el repositorio culencell y el permiso Contents: Read and write. Se guarda solo en este navegador; usalo en tu propio equipo.</small>
+  <div class="row"><button class="p" id="go">Conectar</button></div>`;
+  $('#go').onclick=()=>{cfg={repo:$('#repo').value.trim(),token:$('#tok').value.trim()};localStorage.setItem('cc_cfg',JSON.stringify(cfg));load()};
+}
+async function load(){
+  st('Cargando…');
+  try{const r=await fetch('content.json?'+Date.now());data=await r.json();draw();$('#save').disabled=!(cfg.repo&&cfg.token);st(cfg.repo&&cfg.token?'Listo para editar.':'Falta conectar el repositorio.')}
+  catch(x){st('No se pudo cargar content.json. Abrí este panel desde la página publicada.')}
+}
+const f=(p,l,tx)=>`<label>${l}</label>${tx?'<textarea':'<input'} data-p="${p}" ${tx?'>'+esc(get(data,p))+'</textarea>':'value="'+esc(get(data,p))+'">'}`;
+const thumb=(m,p,i)=>`<div>${m.type==='video'?`<video src="${esc(prev[m.src]||m.src)}"></video>`:`<img src="${esc(prev[m.src]||m.src)}" alt="">`}<button class="d" data-del="${p}.${i}">Quitar</button></div>`;
+function draw(){
+  const d=data;
+  $('#ed').innerHTML=`
+  <div class="box"><h2>Portada</h2>${f('hero.title','Título')}${f('hero.accent','Parte destacada del título')}${f('hero.lead','Descripción',1)}</div>
+  <div class="box"><h2>Contacto</h2>${f('wa','WhatsApp con código de país, solo números (ej. 5491124007231)')}${f('phone','Número a mostrar')}${f('ig','Usuario de Instagram (sin @)')}${f('threads','Usuario de Threads (sin @, opcional)')}${f('contactText','Texto de contacto',1)}</div>
+  <div class="box"><h2>Servicios</h2>${f('servicesIntro','Introducción',1)}
+  ${d.services.map((s,i)=>`<div class="item">${f('services.'+i+'.t','Nombre')}${f('services.'+i+'.d','Descripción')}<div class="row"><button class="d" data-del="services.${i}">Eliminar servicio</button></div></div>`).join('')}
+  <button data-add="services">+ Agregar servicio</button></div>
+  <div class="box"><h2>Videos y trabajos</h2>${f('worksIntro','Introducción',1)}
+  ${d.reels.map((r,i)=>`<div class="item">${f('reels.'+i+'.title','Título')}${f('reels.'+i+'.sub','Subtítulo')}${f('reels.'+i+'.url','Link del reel de Instagram')}
+  <label>O subir un video propio (se reproduce en la página; mejor menos de 25 MB)</label><input type="file" accept="video/*" data-up1="reels.${i}.src">
+  ${r.src?`<div class="th"><div><video src="${esc(prev[r.src]||r.src)}"></video><button class="d" data-clr="reels.${i}.src">Quitar video</button></div></div>`:''}
+  <div class="row"><button class="d" data-del="reels.${i}">Eliminar trabajo</button></div></div>`).join('')}
+  <button data-add="reels">+ Agregar video</button></div>
+  <div class="box"><h2>Secciones nuevas (fotos y videos)</h2>
+  ${d.sections.map((s,i)=>`<div class="item">${f('sections.'+i+'.title','Título de la sección')}${f('sections.'+i+'.text','Texto',1)}
+  <label>Agregar fotos o videos</label><input type="file" accept="image/*,video/*" multiple data-up="sections.${i}.media">
+  <div class="th">${s.media.map((m,j)=>thumb(m,'sections.'+i+'.media',j)).join('')}</div>
+  <div class="row"><button class="d" data-del="sections.${i}">Eliminar sección</button></div></div>`).join('')}
+  <button data-add="sections">+ Agregar sección</button></div>`;
+}
+const blank={services:{t:'Nuevo servicio',d:''},reels:{title:'Nuevo trabajo',sub:'',url:'',src:''},sections:{title:'Nueva sección',text:'',media:[]}};
+document.addEventListener('input',e=>{const p=e.target.dataset.p;if(p&&data)set(data,p,e.target.value)});
+document.addEventListener('click',e=>{const t=e.target.dataset;
+  if(t.add){data[t.add].push(structuredClone(blank[t.add]));draw()}
+  if(t.del){const k=t.del.split('.'),i=+k.pop();get(data,k.join('.')).splice(i,1);draw()}
+  if(t.clr){set(data,t.clr,'');draw()}});
+document.addEventListener('change',e=>{const t=e.target.dataset,fs=[...(e.target.files||[])];
+  const name=f=>'media/'+Date.now()+Math.random().toString(36).slice(2,6)+'-'+f.name.toLowerCase().replace(/[^a-z0-9.]+/g,'-');
+  if(t.up)fs.forEach(x=>{const p=name(x);pending[p]=x;prev[p]=URL.createObjectURL(x);get(data,t.up).push({type:x.type.startsWith('video')?'video':'img',src:p})});
+  if(t.up1&&fs[0]){const p=name(fs[0]);pending[p]=fs[0];prev[p]=URL.createObjectURL(fs[0]);set(data,t.up1,p)}
+  if(fs.length)draw()});
+$('#save').onclick=async()=>{
+  const btn=$('#save');btn.disabled=true;
+  try{
+    const txt=JSON.stringify(data,null,2);
+    for(const [p,file] of Object.entries(pending)){if(!txt.includes(p))continue;st('Subiendo '+file.name+'…');await put(p,await b64(file))}
+    st('Guardando contenido…');await put('content.json',u8(txt));pending={};
+    st('Guardado. La página se actualiza en 1 o 2 minutos.');
+  }catch(x){st('Error: '+x.message)}
+  btn.disabled=false};
+drawCfg();load();
+</script></body></html>

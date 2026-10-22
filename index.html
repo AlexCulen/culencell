@@ -1,12 +1,8 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="utf-8">
+<html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Alex Culen | Reparación de celulares</title>
-<meta name="color-scheme" content="dark">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&display=swap" rel="stylesheet">
+<title>Alex Culen | Reparación de celulares</title><meta name="color-scheme" content="dark">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#07060f;--panel:#120f24;--line:#2a2250;--ink:#f1edff;--mute:#a79fd0;--violet:#a855f7;--blue:#38bdf8;--pink:#e879f9;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
@@ -58,53 +54,36 @@ h2{font-size:clamp(1.6rem,3.5vw,2.2rem);margin:0 0 10px;letter-spacing:-.01em}
 footer{padding:30px 0 44px;color:var(--mute);font-size:.85rem;border-top:1px solid var(--line)}
 @media(max-width:760px){.hero .wrap{grid-template-columns:1fr}.screen{width:190px}nav a:not(:last-child){display:none}}
 @media(prefers-reduced-motion:no-preference){.screen{animation:float 5s ease-in-out infinite}@keyframes float{50%{transform:translateY(-10px)}}}
-</style>
-</head>
-<body>
-<header><div class="wrap"><a class="logo" href="#">Alex<span>Culen</span></a>
-<nav><a href="#servicios">Servicios</a><a href="#trabajos">Trabajos</a><a href="#contacto">Contacto</a></nav></div></header>
 
-<main>
-<div class="hero"><div class="wrap">
-<div>
-<h1>Tu celu, <em>como nuevo</em>.</h1>
-<p class="lead">Reparación de celulares: cambio de módulo, pantallas y más. Mirá cómo trabajo en los videos y escribime por Instagram.</p>
-<div class="btns"><a class="btn main" href="https://wa.me/5491124007231?text=Hola%20Alex%2C%20quiero%20consultar%20por%20una%20reparaci%C3%B3n" target="_blank" rel="noopener">Pedir presupuesto</a><a class="btn" href="#trabajos">Ver trabajos</a></div>
-</div>
-<div class="screen" aria-hidden="true"><div><div class="bolt">⚡</div><b>Reparación lista</b><small>Samsung · Motorola · iPhone</small></div></div>
-</div></div>
-
-<section id="servicios"><div class="wrap">
-<h2>Qué reparo</h2>
-<p class="sub">Trabajo con las marcas más comunes. Consultame por tu modelo y te digo qué se puede hacer.</p>
-<div class="grid">
-<div class="card"><h3>Cambio de módulo</h3><p>Pantalla y táctil nuevos para Samsung, Motorola y otras marcas.</p></div>
-<div class="card"><h3>Equipos que no encienden</h3><p>Diagnóstico para saber si es batería, placa o software.</p></div>
-<div class="card"><h3>Software y desbloqueo</h3><p>Fallas de sistema, reinicios constantes y equipos trabados.</p></div>
-<div class="card"><h3>iPhone y Android</h3><p>Atiendo equipos de ambos sistemas.</p></div>
-</div></div></section>
-
-<section id="trabajos"><div class="wrap">
-<h2>Mis trabajos</h2>
-<p class="sub">Reparaciones reales, paso a paso. Tocá un video para verlo en Instagram.</p>
-<div class="reels">
-<a class="reel r1" href="https://www.instagram.com/reel/DIrxGP5s-pe/" target="_blank" rel="noopener"><strong>Samsung A02</strong><span>Cambio de módulo</span></a>
-<a class="reel r2" href="https://www.instagram.com/reel/DCzbpQQv7vD/" target="_blank" rel="noopener"><strong>Samsung A03</strong><span>Reparación</span></a>
-<a class="reel r4" href="https://www.instagram.com/reel/DAGpl32JQzc/" target="_blank" rel="noopener"><strong>Samsung A10</strong><span>Reparación en banco</span></a>
-</div>
-</div></section>
-
-<section id="contacto"><div class="wrap"><div class="contact">
-<h2>Contacto</h2>
-<p class="sub" style="margin-bottom:0">Contame qué modelo tenés y qué le pasa. Respondo por WhatsApp o mensaje directo.</p>
-<div class="links">
-<a class="btn main" href="https://wa.me/5491124007231?text=Hola%20Alex%2C%20quiero%20consultar%20por%20una%20reparaci%C3%B3n" target="_blank" rel="noopener">WhatsApp 11 2400-7231</a>
-<a class="btn" href="https://ig.me/m/alex_culen" target="_blank" rel="noopener">Mensaje en Instagram</a>
-<a class="btn" href="https://www.instagram.com/alex_culen/" target="_blank" rel="noopener">@alex_culen</a>
-<a class="btn" href="https://www.threads.net/@alexxculen" target="_blank" rel="noopener">Threads @alexxculen</a>
-</div></div></div></section>
-</main>
-
+.media{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.media img,.media video,.vcard video{width:100%;border-radius:16px;border:1px solid var(--line);background:#000;display:block}
+.vcard{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:10px}
+.vcard strong{display:block;margin:10px 6px 0}.vcard span{margin:0 6px 6px;display:block;font-size:.85rem;color:var(--mute)}
+</style></head><body>
+<header><div class="wrap"><a class="logo" href="#">Alex<span>Culen</span></a><nav id="nav"></nav></div></header>
+<main id="app"></main>
 <footer><div class="wrap">© 2026 Alex Culen · Reparación de celulares</div></footer>
-</body>
-</html>
+<script>
+const e=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+fetch('content.json?'+Date.now()).then(r=>r.json()).then(d=>{
+const wa='https://wa.me/'+e(d.wa)+'?text='+encodeURIComponent('Hola Alex, quiero consultar por una reparación');
+const reels=(d.reels||[]).map((r,i)=>r.src
+?`<div class="vcard"><video controls playsinline preload="metadata" src="${e(r.src)}"></video><strong>${e(r.title)}</strong><span>${e(r.sub)}</span></div>`
+:`<a class="reel r${i%4+1}" href="${e(r.url)}" target="_blank" rel="noopener"><strong>${e(r.title)}</strong><span>${e(r.sub)}</span></a>`).join('');
+const secs=(d.sections||[]).map(s=>`<section><div class="wrap"><h2>${e(s.title)}</h2><p class="sub">${e(s.text)}</p><div class="media">${(s.media||[]).map(m=>m.type==='video'?`<video controls playsinline preload="metadata" src="${e(m.src)}"></video>`:`<img loading="lazy" alt="${e(s.title)}" src="${e(m.src)}">`).join('')}</div></div></section>`).join('');
+document.getElementById('nav').innerHTML='<a href="#servicios">Servicios</a><a href="#trabajos">Trabajos</a><a href="#contacto">Contacto</a>';
+document.getElementById('app').innerHTML=`
+<div class="hero"><div class="wrap"><div><h1>${e(d.hero.title)} <em>${e(d.hero.accent)}</em></h1><p class="lead">${e(d.hero.lead)}</p>
+<div class="btns"><a class="btn main" href="${wa}" target="_blank" rel="noopener">Pedir presupuesto</a><a class="btn" href="#trabajos">Ver trabajos</a></div></div>
+<div class="screen" aria-hidden="true"><div><div class="bolt">⚡</div><b>Reparación lista</b><small>Samsung · Motorola · iPhone</small></div></div></div></div>
+<section id="servicios"><div class="wrap"><h2>Qué reparo</h2><p class="sub">${e(d.servicesIntro)}</p><div class="grid">${(d.services||[]).map(s=>`<div class="card"><h3>${e(s.t)}</h3><p>${e(s.d)}</p></div>`).join('')}</div></div></section>
+<section id="trabajos"><div class="wrap"><h2>Mis trabajos</h2><p class="sub">${e(d.worksIntro)}</p><div class="reels">${reels}</div></div></section>
+${secs}
+<section id="contacto"><div class="wrap"><div class="contact"><h2>Contacto</h2><p class="sub" style="margin-bottom:0">${e(d.contactText)}</p><div class="links">
+<a class="btn main" href="${wa}" target="_blank" rel="noopener">WhatsApp ${e(d.phone)}</a>
+<a class="btn" href="https://ig.me/m/${e(d.ig)}" target="_blank" rel="noopener">Mensaje en Instagram</a>
+<a class="btn" href="https://www.instagram.com/${e(d.ig)}/" target="_blank" rel="noopener">@${e(d.ig)}</a>
+${d.threads?`<a class="btn" href="https://www.threads.net/@${e(d.threads)}" target="_blank" rel="noopener">Threads @${e(d.threads)}</a>`:''}
+</div></div></div></section>`;
+}).catch(()=>{document.getElementById('app').innerHTML='<div class="wrap" style="padding:80px 22px">No se pudo cargar el contenido.</div>'});
+</script></body></html>
