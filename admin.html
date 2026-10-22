@@ -32,7 +32,7 @@ button.d{color:#fda4af}button:focus-visible,input:focus-visible,textarea:focus-v
 <div class="bar hid" id="bar"><span id="st">Conectá tu repositorio para empezar.</span><button class="p" id="save" disabled>Guardar y publicar</button></div>
 <script>
 const $=s=>document.querySelector(s),st=t=>$('#st').textContent=t;
-const prev={};let cfg=JSON.parse(localStorage.getItem('cc_cfg')||'{}'),data=null,pending={};
+const prev={};let PW='';const _m=location.hostname.match(/^(.+)\.github\.io$/),_p=location.pathname.split('/')[1],autoRepo=_m&&_p?_m[1]+'/'+_p:'';let cfg={repo:autoRepo||JSON.parse(localStorage.getItem('cc_cfg')||'{}').repo||''},data=null,pending={};
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const get=(o,p)=>p.split('.').reduce((a,k)=>a?.[k],o);
 const set=(o,p,v)=>{const k=p.split('.'),l=k.pop();k.reduce((a,x)=>a[x],o)[l]=v};
@@ -47,10 +47,11 @@ async function put(path,content){
 function drawCfg(){
   $('#cfg').innerHTML=`<h2>Conexión con GitHub</h2>
   <label>Repositorio (usuario/nombre)</label><input id="repo" placeholder="tuusuario/culencell" value="${esc(cfg.repo)}">
-  <label>Token de acceso</label><input id="tok" type="password" value="${esc(cfg.token)}">
-  <small>Creá un token en GitHub: Settings, Developer settings, Fine-grained tokens. Elegí solo el repositorio culencell y el permiso Contents: Read and write. Se guarda solo en este navegador; usalo en tu propio equipo.</small>
+  <label>Token de acceso</label><input id="tok" type="password">
+  <small>Creá un token en GitHub: Settings, Developer settings, Fine-grained tokens. Elegí solo el repositorio culencell y el permiso Contents: Read and write. Se guarda cifrado con tu contraseña en el repositorio, así la próxima vez entrás solo con usuario y contraseña, desde cualquier equipo.</small>
   <div class="row"><button class="p" id="go">Conectar</button></div>`;
-  $('#go').onclick=()=>{cfg={repo:$('#repo').value.trim(),token:$('#tok').value.trim()};localStorage.setItem('cc_cfg',JSON.stringify(cfg));load()};
+  $('#go').onclick=async()=>{cfg={repo:$('#repo').value.trim(),token:$('#tok').value.trim()};localStorage.setItem('cc_cfg',JSON.stringify({repo:cfg.repo}));
+    try{st('Guardando acceso…');await put('auth.json',u8(await enc(cfg.token)));$('#cfg').innerHTML='<small>Listo. Desde ahora entrás solo con usuario y contraseña.</small>'}catch(x){st('Error: '+x.message);return}load()};
 }
 async function load(){
   st('Cargando…');
@@ -100,11 +101,17 @@ $('#save').onclick=async()=>{
     st('Guardado. La página se actualiza en 1 o 2 minutos.');
   }catch(x){st('Error: '+x.message)}
   btn.disabled=false};
+const tob=a=>btoa(String.fromCharCode(...new Uint8Array(a))),fromb=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+async function key(salt){const m=await crypto.subtle.importKey('raw',new TextEncoder().encode(PW),'PBKDF2',false,['deriveKey']);return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:200000,hash:'SHA-256'},m,{name:'AES-GCM',length:256},false,['encrypt','decrypt'])}
+async function enc(t){const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12));const c=await crypto.subtle.encrypt({name:'AES-GCM',iv},await key(salt),new TextEncoder().encode(t));return JSON.stringify({s:tob(salt),i:tob(iv),c:tob(c)})}
+async function dec(j){const o=JSON.parse(j);return new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:fromb(o.i)},await key(fromb(o.s)),fromb(o.c)))}
 const HASH='77913b21c3f2479b30ebf6c959f89a5f76d403b9825df3ea6c1dd2360c3f19ca';
 async function sha(t){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(t));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
-function open_(){$('#lg').classList.add('hid');$('#app').classList.remove('hid');$('#bar').classList.remove('hid');drawCfg();load()}
+async function open_(){$('#lg').classList.add('hid');$('#app').classList.remove('hid');$('#bar').classList.remove('hid');
+  if(cfg.repo){try{const r=await fetch('auth.json?'+Date.now());if(r.ok){cfg.token=await dec(await r.text());$('#cfg').innerHTML='<small>Conectado a '+esc(cfg.repo)+'.</small>';load();return}}catch(x){}}
+  drawCfg();load()}
 async function login(){const h=await sha('culencell|'+$('#u').value.trim()+'|'+$('#pw').value);
-  if(h===HASH){sessionStorage.setItem('cc_ok',HASH);open_()}else{$('#err').textContent='Usuario o contraseña incorrectos.'}}
+  if(h===HASH){PW=$('#pw').value;open_()}else{$('#err').textContent='Usuario o contraseña incorrectos.'}}
 $('#in').onclick=login;$('#pw').onkeydown=e=>{if(e.key==='Enter')login()};
-if(sessionStorage.getItem('cc_ok')===HASH)open_();
+
 </script></body></html>
