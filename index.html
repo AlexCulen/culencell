@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Alex Culen | Reparación de celulares</title>
+<meta name="color-scheme" content="dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07060f;--panel:#120f24;--line:#2a2250;--ink:#f1edff;--mute:#a79fd0;--violet:#a855f7;--blue:#38bdf8;--pink:#e879f9;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Sora',system-ui,-apple-system,'Segoe UI',sans-serif;line-height:1.6}
+a{color:inherit}
+.wrap{max-width:1040px;margin:0 auto;padding:0 22px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:rgba(7,6,15,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{font-weight:800;letter-spacing:.02em;text-decoration:none}
+.logo span{color:var(--violet)}
+nav a{margin-left:20px;text-decoration:none;color:var(--mute);font-size:.92rem}
+nav a:hover,nav a:focus-visible{color:var(--ink)}
+.hero{position:relative;padding:84px 0 72px;overflow:hidden}
+.hero::before{content:"";position:absolute;width:560px;height:560px;right:-160px;top:-120px;background:radial-gradient(circle,rgba(168,85,247,.45),rgba(56,189,248,.12) 55%,transparent 70%);pointer-events:none}
+.hero .wrap{position:relative;display:grid;gap:40px;grid-template-columns:1.2fr .8fr;align-items:center}
+h1{font-size:clamp(2.3rem,6vw,4.1rem);line-height:1.05;margin:0 0 18px;font-weight:800;letter-spacing:-.02em}
+h1 em{font-style:normal;background:linear-gradient(90deg,var(--violet),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--mute);max-width:46ch;margin:0 0 28px}
+.btns{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-block;padding:13px 22px;border-radius:12px;font-weight:600;text-decoration:none;border:1px solid var(--line)}
+.btn.main{background:linear-gradient(90deg,var(--violet),#6366f1);border-color:transparent;box-shadow:0 0 28px rgba(168,85,247,.45)}
+.btn:hover,.btn:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.screen{justify-self:center;width:230px;aspect-ratio:9/18;border-radius:34px;border:3px solid #3b3270;background:linear-gradient(160deg,#1b1240,#0b2a4a);position:relative;box-shadow:0 0 60px rgba(168,85,247,.35);display:grid;place-items:center;text-align:center;padding:20px}
+.screen::before{content:"";position:absolute;top:10px;left:50%;width:60px;height:7px;margin-left:-30px;border-radius:9px;background:#07060f}
+.screen b{display:block;font-size:1.15rem;color:var(--blue)}
+.screen small{color:var(--mute)}
+.bolt{font-size:3rem;filter:drop-shadow(0 0 14px var(--violet))}
+section{padding:64px 0}
+h2{font-size:clamp(1.6rem,3.5vw,2.2rem);margin:0 0 10px;letter-spacing:-.01em}
+.sub{color:var(--mute);margin:0 0 34px;max-width:56ch}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px}
+.card h3{margin:0 0 6px;font-size:1.05rem;color:var(--blue)}
+.card p{margin:0;color:var(--mute);font-size:.94rem}
+.reels{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.reel{display:flex;flex-direction:column;justify-content:flex-end;aspect-ratio:9/14;border-radius:18px;padding:18px;text-decoration:none;border:1px solid var(--line);position:relative;overflow:hidden}
+.reel::after{content:"▶";position:absolute;top:14px;right:16px;width:34px;height:34px;display:grid;place-items:center;border-radius:50%;background:rgba(7,6,15,.65);font-size:.8rem}
+.reel strong{font-size:1.05rem;position:relative}
+.reel span{font-size:.85rem;color:#d7d0ff;position:relative}
+.r1{background:linear-gradient(180deg,#0e63c9,#06223f)}
+.r2{background:linear-gradient(180deg,#5b1aa6,#10062a)}
+.r3{background:linear-gradient(180deg,#f59e0b,#7c2d12)}
+.r4{background:linear-gradient(180deg,#1e6f9f,#7a1d1d)}
+.reel:hover,.reel:focus-visible{outline:2px solid var(--pink);outline-offset:3px}
+.contact{border:1px solid var(--line);border-radius:22px;padding:34px;background:linear-gradient(135deg,rgba(168,85,247,.16),rgba(56,189,248,.08))}
+.links{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+footer{padding:30px 0 44px;color:var(--mute);font-size:.85rem;border-top:1px solid var(--line)}
+@media(max-width:760px){.hero .wrap{grid-template-columns:1fr}.screen{width:190px}nav a:not(:last-child){display:none}}
+@media(prefers-reduced-motion:no-preference){.screen{animation:float 5s ease-in-out infinite}@keyframes float{50%{transform:translateY(-10px)}}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a class="logo" href="#">Alex<span>Culen</span></a>
+<nav><a href="#servicios">Servicios</a><a href="#trabajos">Trabajos</a><a href="#contacto">Contacto</a></nav></div></header>
+
+<main>
+<div class="hero"><div class="wrap">
+<div>
+<h1>Tu celu, <em>como nuevo</em>.</h1>
+<p class="lead">Reparación de celulares: cambio de módulo, pantallas y más. Mirá cómo trabajo en los videos y escribime por Instagram.</p>
+<div class="btns"><a class="btn main" href="https://wa.me/5491124007231?text=Hola%20Alex%2C%20quiero%20consultar%20por%20una%20reparaci%C3%B3n" target="_blank" rel="noopener">Pedir presupuesto</a><a class="btn" href="#trabajos">Ver trabajos</a></div>
+</div>
+<div class="screen" aria-hidden="true"><div><div class="bolt">⚡</div><b>Reparación lista</b><small>Samsung · Motorola · iPhone</small></div></div>
+</div></div>
+
+<section id="servicios"><div class="wrap">
+<h2>Qué reparo</h2>
+<p class="sub">Trabajo con las marcas más comunes. Consultame por tu modelo y te digo qué se puede hacer.</p>
+<div class="grid">
+<div class="card"><h3>Cambio de módulo</h3><p>Pantalla y táctil nuevos para Samsung, Motorola y otras marcas.</p></div>
+<div class="card"><h3>Equipos que no encienden</h3><p>Diagnóstico para saber si es batería, placa o software.</p></div>
+<div class="card"><h3>Software y desbloqueo</h3><p>Fallas de sistema, reinicios constantes y equipos trabados.</p></div>
+<div class="card"><h3>iPhone y Android</h3><p>Atiendo equipos de ambos sistemas.</p></div>
+</div></div></section>
+
+<section id="trabajos"><div class="wrap">
+<h2>Mis trabajos</h2>
+<p class="sub">Reparaciones reales, paso a paso. Tocá un video para verlo en Instagram.</p>
+<div class="reels">
+<a class="reel r1" href="https://www.instagram.com/reel/DIrxGP5s-pe/" target="_blank" rel="noopener"><strong>Samsung A02</strong><span>Cambio de módulo</span></a>
+<a class="reel r2" href="https://www.instagram.com/reel/DCzbpQQv7vD/" target="_blank" rel="noopener"><strong>Samsung A03</strong><span>Reparación</span></a>
+<a class="reel r4" href="https://www.instagram.com/reel/DAGpl32JQzc/" target="_blank" rel="noopener"><strong>Samsung A10</strong><span>Reparación en banco</span></a>
+</div>
+</div></section>
+
+<section id="contacto"><div class="wrap"><div class="contact">
+<h2>Contacto</h2>
+<p class="sub" style="margin-bottom:0">Contame qué modelo tenés y qué le pasa. Respondo por WhatsApp o mensaje directo.</p>
+<div class="links">
+<a class="btn main" href="https://wa.me/5491124007231?text=Hola%20Alex%2C%20quiero%20consultar%20por%20una%20reparaci%C3%B3n" target="_blank" rel="noopener">WhatsApp 11 2400-7231</a>
+<a class="btn" href="https://ig.me/m/alex_culen" target="_blank" rel="noopener">Mensaje en Instagram</a>
+<a class="btn" href="https://www.instagram.com/alex_culen/" target="_blank" rel="noopener">@alex_culen</a>
+<a class="btn" href="https://www.threads.net/@alexxculen" target="_blank" rel="noopener">Threads @alexxculen</a>
+</div></div></div></section>
+</main>
+
+<footer><div class="wrap">© 2026 Alex Culen · Reparación de celulares</div></footer>
+</body>
+</html>
